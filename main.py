@@ -62,14 +62,14 @@ for file in tqdm(files):
     for element, _level in conv_res.document.iterate_items():
         if isinstance(element, TableItem):
             table_counter += 1
-            # element_image_filename = (
-            #     os.path.join(output_dir, f"{doc_filename}-table-{table_counter}.png")
-            # )
-            # with open(element_image_filename, "wb") as fp:
-            #     element.image.pil_image.save(fp, "PNG")
-            
+            element_image_filename = (
+                os.path.join(output_dir, f"table-{table_counter}.png")
+            )
+            with open(element_image_filename, "wb") as fp:
+                element.image.pil_image.save(fp, "PNG")
+
             element_md_filename = (
-                os.path.join(output_dir, f"{doc_filename}-table-{table_counter}.md")
+                os.path.join(output_dir, f"table-{table_counter}.md")
             )
             with open(element_md_filename, "w") as fp:
                 fp.write(f"## {element.caption_text(conv_res.document)}\n\n---\n\n{element.export_to_markdown()}\n")
@@ -77,7 +77,7 @@ for file in tqdm(files):
         if isinstance(element, PictureItem):
             picture_counter += 1
             element_image_filename = (
-                os.path.join(output_dir, f"{doc_filename}-picture-{picture_counter}.png")
+                os.path.join(output_dir, f"picture-{picture_counter}.png")
             )
             with open(element_image_filename, "wb") as fp:
                 element.image.pil_image.save(fp, "PNG")
