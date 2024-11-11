@@ -43,7 +43,7 @@ for file in tqdm(files):
 
     start_time = time.time()
 
-    conv_res = doc_converter.convert(os.path.join(ingest_path, file))
+    conv_res = conv_res or doc_converter.convert(os.path.join(ingest_path, file))
     output_dir = os.path.join(converted_path, file.replace('.pdf', ''))
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
@@ -59,7 +59,8 @@ for file in tqdm(files):
     # Save images of figures and tables
     table_counter = 0
     picture_counter = 0
-    for element, _level in conv_res.document.iterate_items():
+    for i, (element, _level) in enumerate(conv_res.document.iterate_items()):
+        print(i, element.label)
         if isinstance(element, TableItem):
             table_counter += 1
             element_image_filename = (
